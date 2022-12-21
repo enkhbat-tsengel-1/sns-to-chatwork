@@ -14,9 +14,9 @@ Metadata:
     LicenseUrl: LICENSE
     ReadmeUrl: README.md
     Labels: ["chatwork", "integration"]
-    HomePageUrl: https://github.com/enkhbat-tsengel
+    HomePageUrl: https://github.com/enkhbat-tsengel-1/sns-to-chatwork
     SemanticVersion: 0.0.1
-    SourceCodeUrl: https://github.com/enkhbat-tsengel
+    SourceCodeUrl: https://github.com/enkhbat-tsengel-1/sns-to-chatwork
 
 Transform:
   - AWS::Serverless-2016-10-31
