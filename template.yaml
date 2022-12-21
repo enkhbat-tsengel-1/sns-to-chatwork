@@ -1,0 +1,56 @@
+# This is the SAM template that represents the architecture of your serverless application
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
+
+# The AWSTemplateFormatVersion identifies the capabilities of the template
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  sns-to-chatwork
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: sns-to-chatwork
+    Description: sns-to-chatwork
+    Author: Tsengel Enkhbat
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.md
+    Labels: ["chatwork", "integration"]
+    HomePageUrl: https://github.com/enkhbat-tsengel
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/enkhbat-tsengel
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  SNSTopicArn:
+    Type: String
+    Description: "Subscribe a Lambda function to an Amazon SNS topic's arn"
+  RoomId:
+    Type: String
+    Description: "Chatwork room id to receive message."
+
+Resources:
+  ChatworkSendMessageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/send-chatwork-message.sendChatworkMessageHandler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A Lambda function that calls chatworks send message api.
+      Events:
+        SNSEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref SNSTopicArn
+      Environment:
+        Variables:
+          ROOM_ID: !Ref RoomId
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - SSMParameterReadPolicy:
+            ParameterName: chatwork_send_message*
+        - KMSDecryptPolicy:
+            KeyId: alias/aws/ssm

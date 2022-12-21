@@ -1,0 +1,14 @@
+{
+  "name": "sns-to-chatwork",
+  "description": "sns-to-chatwork",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "aws-sdk": "^2.1278.0",
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
